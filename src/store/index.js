@@ -4,7 +4,7 @@ export default createStore({
     state: {
         ReadLink: "",
         IsRaw: false,
-        ContentSelector: "",
+        QuerySelector: "",
     },
     mutations: {
         UpdateReadLink (state, link) {
@@ -13,8 +13,8 @@ export default createStore({
         ChangeRaw (state) {
             state.IsRaw = !state.IsRaw;
         },
-        UpdateContentSelector (state, selector) {
-            state.ContentSelector = selector;
+        UpdateQuerySelector (state, selector) {
+            state.QuerySelector = selector;
         }
     },
     actions: {
