@@ -71,7 +71,7 @@ export default {
                         if (this.SelectMultiple) {
                             console.log("QSS: " + this.QuerySelectorSeparator);
                             console.log("QSAllMatches: " + document.querySelector('.textArea').querySelectorAll(this.QuerySelector).length + " DOM Objects");
-                            this.TextData = [...document.querySelector('.textArea').querySelectorAll(this.QuerySelector)].map(e => this.QuerySelectorSeparator ? e.innerHTML + "<div class='w-full h-1 bg-yellow-500 my-8'></div>" : e.innerHTML).join("\n");
+                            this.TextData = [...document.querySelector('.textArea').querySelectorAll(this.QuerySelector)].map(e => this.QuerySelectorSeparator ? e.innerHTML + "<div class='w-full h-1 bg-primary my-8'></div>" : e.innerHTML).join("\n");
                         } else {
                             this.TextData = document.querySelector('.textArea').querySelector(this.QuerySelector).innerHTML;
                         }

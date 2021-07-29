@@ -1,5 +1,5 @@
 <template>
-      <header class="bg-yellow-500 mx-auto py-3 font-semibold text-white text-2xl align-middle flex sm:flex-row space-y-3 sm:space-y-0 flex-col">
+      <header class="bg-primary mx-auto py-3 font-semibold text-primary text-2xl align-middle flex sm:flex-row space-y-3 sm:space-y-0 flex-col">
         <div class="flex justify-between place-items-center px-3">
             <router-link to="/" class="flex-initial">
                 <h1 class="text-3xl mr-3 pr-5 sm:border-r-2 border-gray-50">ReadIt</h1>
