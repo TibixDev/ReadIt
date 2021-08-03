@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Reader from '../views/Reader.vue'
-import Settings from '../views/Settings.vue'
+import Home from '@/views/Home.vue'
+import Reader from '@/views/Reader.vue'
+import Settings from '@/views/Settings.vue'
+import store from '@/store/index.js';
 
 const routes = [
   {
@@ -12,7 +13,11 @@ const routes = [
   {
     path: '/reader/',
     name: 'Reader',
-    component: Reader
+    component: Reader,
+    beforeEnter: (to, from, next) => {
+      if (!store.state.ReadLink) next({ name: 'Home' })
+      else next()
+    }
   },
   {
     path: '/about',

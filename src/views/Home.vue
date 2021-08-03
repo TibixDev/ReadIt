@@ -3,7 +3,9 @@
     <div class="flex flex-row justify-center px-3 pb-5">
         <input :value="ReadLink" @input="UpdateReadLink" class="w-full sm:w-auto text-gray-500 text-xl p-4 rounded-l-full" placeholder="https://read.me/text.txt" type="text" name="textlink" id="textlink">
         <button
-            class="bg-primary rounded-r-full text-xl px-3"
+            :disabled="!IsValidLink"
+            class="rounded-r-full text-xl px-3"
+            :class="!IsValidLink ? 'bg-gray-600 cursor-not-allowed' : 'bg-primary'"
             @click="this.$router.push('/reader/')"
         >
         Read It
@@ -23,17 +25,24 @@
             <input class="p-4 rounded-lg color-primary" type="checkbox" id="useSeparator" :checked="QuerySelectorSeparator" @click="$store.commit('UpdateQuerySelectorSeparator')">
             <label for="useSeparator" class="text-xl font-semibold px-2">Use separator between matches</label>
         </div>
+        <div v-if="!IsRaw">
+            <input class="p-4 rounded-lg color-primary" type="checkbox" id="useAutomaticSpacing" :checked="AutomaticSpacing" @click="$store.commit('UpdateAutomaticSpacing')">
+            <label for="useAutomaticSpacing" class="text-xl font-semibold px-2">Use automatic spacing</label>
+        </div>
     </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 
 export default {
     name: 'Home',
     computed: {
-        ...mapState(["ReadLink", "IsRaw", "QuerySelector", "SelectMultiple", "QuerySelectorSeparator"])
+        ...mapState(["ReadLink", "IsRaw", "AutomaticSpacing", "QuerySelector", "SelectMultiple", "QuerySelectorSeparator"]),
+        IsValidLink: function () {
+            return this.ReadLink.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig);
+        }
     },
     methods: {
         //...mapMutations(["UpdateReadLink"])
