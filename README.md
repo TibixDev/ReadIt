@@ -1,4 +1,15 @@
-# readit
+# ReadIt
+
+
+## Description
+ReadIt is a free and open source reader webapp made using Vue.js
+## Features
+- Read text and HTML on a unified clean interface
+- HTML Sanitization
+- Query Selector, Query Selector All, Separators
+
+## Production Build
+[Here](https://readit.vercel.app/)
 
 ## Project setup
 ```
