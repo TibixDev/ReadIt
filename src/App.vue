@@ -74,13 +74,16 @@ html {
     header {
         color: #ffffff!important;
     }
+    button {
+        color: #ffffff;
+    }
+    .logWindow {
+        color: #ffffff;
+        background-color: #dc79a4;
+    }
+    .erricon {
+        background-color: #dc79a4;
+        @apply rounded-full;
+    }
 }
-
-/*.theme-cobalt .bg-primary {
-    @apply bg-blue-500
-}
-
-.theme-cobalt .text-primary {
-    @apply text-gray-50;
-}*/
 </style>
