@@ -30,14 +30,17 @@
             <label for="useAutomaticSpacing" class="text-xl font-semibold px-2">Use automatic spacing</label>
         </div>
     </div>
+    <p class="text-2xl my-8 pt-8 border-t-2 border-primary ">Or continue where you left off</p>
+    <History/>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-
+import History from "@/components/History.vue";
 
 export default {
     name: 'Home',
+    components: { History },
     computed: {
         ...mapState(["ReadLink", "IsRaw", "AutomaticSpacing", "QuerySelector", "SelectMultiple", "QuerySelectorSeparator"]),
         IsValidLink: function () {

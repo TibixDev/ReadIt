@@ -1,13 +1,13 @@
 <template>
     <Header/>
-    <div class="container mx-auto mt-5 text-primary px-3">
+    <div class="container mx-auto text-primary px-3 appcontent">
         <router-view/>
     </div>
 </template>
 
 <script>
-import Header from "./components/Header.vue";
-import ThemeMixin from "./mixins/ThemeMixin.js";
+import Header from "@/components/Header.vue";
+import ThemeMixin from "@/mixins/ThemeMixin.js";
 
 export default {
     name: "App",
@@ -35,6 +35,10 @@ html {
   color: #2c3e50;
 }
 
+.appcontent {
+    padding-top: 5rem;
+}
+
 .text-primary {
     @apply text-gray-50;
 }
@@ -47,6 +51,10 @@ html {
     @apply text-yellow-500 #{!important};
 }
 
+.border-primary {
+    @apply border-yellow-500;
+}
+
 .theme-cobalt {
     background-color: #2a2a2a;
     .bg-primary {
@@ -57,6 +65,9 @@ html {
     }
     .color-primary {
         @apply text-blue-500 #{!important};
+    }
+    .border-primary {
+        @apply border-blue-500;
     }
 }
 
@@ -84,6 +95,9 @@ html {
     .erricon {
         background-color: #dc79a4;
         @apply rounded-full;
+    }
+    .border-primary {
+        border-color: #dc79a4;
     }
 }
 </style>

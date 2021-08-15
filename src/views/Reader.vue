@@ -2,9 +2,10 @@
     <h1 v-if="!TextData && !ErrorFlag" class="text-4xl animate-bounce pt-5">Loading...</h1>
     <div v-if="ErrorFlag">
         <img src="/img/alert-circle.svg" alt="Error Icon" class="erricon mx-auto h-48 w-48">
-        <div class="pt-3 pb-10">
+        <div class="errorWindow pt-3 pb-10 flex flex-col gap-3 sm:gap-1">
             <h1 class="text-3xl">An error occured while trying to read this document.</h1>
-            <p class="text-xl">There could be many reasons for the error. Invalid URL-s, invalid query selectors.</p>
+            <p class="text-xl">There could be many reasons for the error. An invalid URL, invalid query selector, and many others.</p>
+            <p class="text-xl">If you believe this is a mistake please open a GitHub issue <a href="https://github.com/TibixDev/readit/issues">here</a>.</p>
         </div>
         <div class="logWindow p-2 bg-gray-700 w-auto sm:w-2/3 mx-auto rounded-xl border-l-4 border-primary">
             <p class="text-4xl font-semibold py-2">Log</p>
@@ -28,7 +29,7 @@
 <script>
 import axios from 'axios';
 import sanitizeHtml from 'sanitize-html';
-import { mapState } from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
 
 export default {
 
@@ -38,13 +39,18 @@ export default {
             TextData: null,
             TextTitle: null,
             Logs: [],
-            ErrorFlag: false
+            ErrorFlag: false,
+            LocalHistoryID: this.HistoryID,
+            HistoryHasTitle: false,
+            ScrollUpdateInterval: null
         }
     },
     computed: {
-        ...mapState(["ReadLink", "IsRaw", "AutomaticSpacing", "QuerySelector", "SelectMultiple", "QuerySelectorSeparator"])
+        ...mapState(["ReadLink", "IsRaw", "AutomaticSpacing", "QuerySelector", "SelectMultiple", "QuerySelectorSeparator", "HistoryID"]),
+        ...mapGetters(['GetHistoryEntryByID, GetHistoryEntryByURL'])
     },
     methods: {
+        ...mapMutations(["NewHistoryEntry", "UpdateHistoryEntry", "SetPropsFromHistory", "UnsetHistoryID"]),
         Process() {
             if (this.ReadLink) {
                 axios.get("https://cors.bridged.cc/" + this.ReadLink)
@@ -76,13 +82,21 @@ export default {
                         if (!this.IsRaw) {
                             // Match title tag with regex magic
                             this.TextTitle = this.TextData.match(/<title>(.*?)<\/title>/i)[1];
+                            if (!this.HistoryHasTitle) {
+                                this.UpdateHistoryEntry({id: this.LocalHistoryID, prop: "title", value: this.TextTitle});
+                            }
+                            console.log(`Updated title (${this.TextTitle})`);
+                        } else {
+                            if (!this.HistoryHasTitle) {
+                                this.UpdateHistoryEntry({id: this.LocalHistoryID, prop: "title", value: this.TextData.split('\n')[0]});
+                            }
                         }
                         if (!this.IsRaw && this.QuerySelector) {
                             try {
                                 if (this.SelectMultiple) {
-                                    //console.log("QSS: " + this.QuerySelectorSeparator);
+                                    console.log("QSS: " + this.QuerySelectorSeparator);
                                     this.Logs.push("QSS: " + this.QuerySelectorSeparator);
-                                    //console.log("QSAllMatches: " + document.querySelector('.textArea').querySelectorAll(this.QuerySelector).length + " DOM Objects");
+                                    console.log("QSAllMatches: " + document.querySelector('.textArea').querySelectorAll(this.QuerySelector).length + " DOM Objects");
                                     this.Logs.push("QSAllMatches: " + document.querySelector('.textArea').querySelectorAll(this.QuerySelector).length + " DOM Objects");
                                     this.TextData = [...document.querySelector('.textArea').querySelectorAll(this.QuerySelector)].map(e => this.QuerySelectorSeparator ? e.innerHTML + "<div class='w-full h-1 bg-primary my-8'></div>" : e.innerHTML).join("\n");
                                 } else {
@@ -95,6 +109,17 @@ export default {
                                 this.Logs.push(e);
                             }
                         }
+
+                        //console.log("Setting scroll percentage: " + this.GetHistoryEntryByID(this.LocalHistoryID).progress)
+                        console.log("Setting scroll percentage...")
+                        this.SetScrollPercent(this.GetHistoryEntryByID(this.LocalHistoryID).progress || 0);
+
+
+                        // Update history entry with scroll position every 10 seconds
+                        console.log("Setting interval for ScrollUpdate...")
+                        this.ScrollUpdateInterval = setInterval(() => {
+                            this.UpdateHistoryEntry({id: this.LocalHistoryID, prop: "progress", value: this.GetScrollPercent()});
+                        }, 5000);
                     }, 250);
     
                 })
@@ -104,10 +129,47 @@ export default {
                     console.log(error);
                 })
             }
+        },
+
+        // Helper
+        GetScrollPercent() {
+            let h = document.documentElement, 
+                b = document.body,
+                st = 'scrollTop',
+                sh = 'scrollHeight';
+            return (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+        },
+        SetScrollPercent(percent) {
+            if (percent > 0) {
+                let h = document.documentElement, 
+                    b = document.body,
+                    st = 'scrollTop',
+                    sh = 'scrollHeight';
+                let scrollpos = Math.floor(h[sh] * (percent / 100)) - h.clientHeight;
+                console.log(`Scrolling to ${percent}% -> ${scrollpos} / ${h[sh]} px`);
+                window.scrollTo(0, scrollpos);
+            }
         }
     },
     created() {
+        if (this.HistoryID) {
+            this.SetPropsFromHistory(this.HistoryID);
+            this.LocalHistoryID = this.HistoryID;
+            this.UnsetHistoryID();
+            this.HistoryHasTitle = true;
+        } else {
+            console.log(typeof this.NewHistoryEntry)
+            this.LocalHistoryID = '_' + Math.random().toString(36).substr(2, 9);
+            this.NewHistoryEntry(this.LocalHistoryID);
+        }
         this.Process();
+    },
+    beforeRouteLeave (to, from, next) {
+        if (this.ScrollUpdateInterval) {
+            clearInterval(this.ScrollUpdateInterval);
+            console.log(`Cleared ScrollUpdateInterval for ID ${this.LocalHistoryID}`);
+        }
+        next();
     }
 }
 </script>
@@ -125,8 +187,12 @@ export default {
     @apply py-1 text-blue-400 underline;
 }
 
+.errorWindow a {
+    @apply py-1 text-blue-400 underline;
+}
+
 .textArea img {
-    @apply rounded-lg mx-auto;
+    @apply py-2 rounded-lg mx-auto;
 }
 
 .textArea pre {

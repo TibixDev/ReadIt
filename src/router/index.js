@@ -15,7 +15,7 @@ const routes = [
     name: 'Reader',
     component: Reader,
     beforeEnter: (to, from, next) => {
-      if (!store.state.ReadLink) next({ name: 'Home' })
+      if (!store.state.ReadLink && !store.state.HistoryID) next({ name: 'Home' })
       else next()
     }
   },
