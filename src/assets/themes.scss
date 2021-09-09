@@ -1,0 +1,67 @@
+.theme-sakura {
+    background-color: #ffffff;
+    .bg-primary {
+        background-color: #dc79a4
+    }
+    .text-primary {
+        color: #000000;
+    }
+    .color-primary {
+        color: #dc79a4!important;
+    }
+    header {
+        color: #ffffff!important;
+    }
+    button {
+        color: #ffffff;
+    }
+    .logWindow {
+        color: #ffffff;
+        background-color: #dc79a4;
+    }
+    .erricon {
+        background-color: #dc79a4;
+        @apply rounded-full;
+    }
+    .border-primary {
+        border-color: #dc79a4;
+    }
+    .window-bar {
+        @apply bg-pink-400 text-white;
+    }
+    .window-content {
+        @apply bg-gray-200;
+    }
+    .loading-bar {
+        @apply bg-pink-400;
+        @apply border-pink-400;
+    }
+    .textArea pre {
+        @apply text-white border-pink-400;
+    }
+}
+
+.theme-cobalt {
+    background-color: #2a2a2a;
+    .bg-primary {
+        @apply bg-blue-500;
+    }
+    .text-primary {
+        @apply text-gray-50;
+    }
+    .color-primary {
+        @apply text-blue-500 #{!important};
+    }
+    .border-primary {
+        @apply border-blue-500;
+    }
+    .window-content {
+        @apply bg-gray-700;
+    }
+    .loading-bar {
+        @apply bg-white;
+    }
+    .textArea pre {
+        @apply text-white border-blue-500;
+    }
+}

@@ -5,14 +5,14 @@
             class="flex flex-col m-2 text-xl bg-primary rounded-xl text-center"
         >
             <div>
-                <div class="flex flex-row w-full justify-between items-center bg-blue-600 px-2 rounded-t-xl">
-                    <p class="py-1">{{ HumanizeAgo(entry.date) }} ago</p>
-                    <button class="h-4 w-4 bg-red-500 rounded-full" @click="DeleteHistoryEntry(entry.id)"></button>
+                <div class="flex flex-row w-full justify-between items-center window-bar px-2 rounded-t-xl">
+                    <p class="py-1 line-clamp-1">{{ HumanizeAgo(entry.date) }} ago</p>
+                    <button class="h-4 w-4 bg-red-500 hover:bg-red-600 rounded-full pl-2" @click="DeleteHistoryEntry(entry.id)"></button>
                 </div>
             </div>
-            <div class="flex flex-col justify-between cursor-pointer" @click="ActivateEntry(entry.id)">
-                <p class="p-2 line-clamp-3">{{ entry.title }}</p>
-                <Progress :value="entry.progress"/>
+            <div class="flex flex-col justify-between h-full cursor-pointer window-content rounded-b-xl" @click="ActivateEntry(entry.id)">
+                <p class="p-2 line-clamp-3">{{ entry.title || "Untitled Article" }}</p>
+                <Progress colorclass="loading-bar" :value="entry.progress"/>
             </div>
         </div>
     </div>

@@ -110,9 +110,9 @@ export default {
                             }
                         }
 
-                        //console.log("Setting scroll percentage: " + this.GetHistoryEntryByID(this.LocalHistoryID).progress)
                         console.log("Setting scroll percentage...")
-                        this.SetScrollPercent(this.GetHistoryEntryByID(this.LocalHistoryID).progress || 0);
+                        // For some reason this simply refused to work with mapGetters \_o_/
+                        this.SetScrollPercent(this.$store.getters.GetHistoryEntryByID(this.LocalHistoryID).progress || 0);
 
 
                         // Update history entry with scroll position every 10 seconds
@@ -197,6 +197,6 @@ export default {
 
 .textArea pre {
     white-space: pre-wrap;
-    @apply bg-gray-800 my-5 p-5 rounded-lg text-left font-mono border-l-8 border-blue-500
+    @apply bg-gray-800 my-5 p-5 rounded-lg text-left font-mono border-l-8;
 }
 </style>

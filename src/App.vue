@@ -23,16 +23,18 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "assets/themes.scss";
+
 html {
     background-color: #2c3e50;
 }
 
 #app {
-  font-family: 'Poppins', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
 }
 
 .appcontent {
@@ -55,49 +57,13 @@ html {
     @apply border-yellow-500;
 }
 
-.theme-cobalt {
-    background-color: #2a2a2a;
-    .bg-primary {
-        @apply bg-blue-500;
-    }
-    .text-primary {
-        @apply text-gray-50;
-    }
-    .color-primary {
-        @apply text-blue-500 #{!important};
-    }
-    .border-primary {
-        @apply border-blue-500;
-    }
+.window-content {
+    @apply bg-gray-600;
 }
 
-.theme-sakura {
-    background-color: #ffffff;
-    .bg-primary {
-        background-color: #dc79a4
-    }
-    .text-primary {
-        color: #000000;
-    }
-    .color-primary {
-        color: #dc79a4!important;
-    }
-    header {
-        color: #ffffff!important;
-    }
-    button {
-        color: #ffffff;
-    }
-    .logWindow {
-        color: #ffffff;
-        background-color: #dc79a4;
-    }
-    .erricon {
-        background-color: #dc79a4;
-        @apply rounded-full;
-    }
-    .border-primary {
-        border-color: #dc79a4;
-    }
+.loading-bar {
+    @apply bg-pink-400;
+    @apply border-pink-400;
 }
+
 </style>
