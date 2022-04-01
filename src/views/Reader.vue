@@ -53,7 +53,7 @@ export default {
         ...mapMutations(["NewHistoryEntry", "UpdateHistoryEntry", "SetPropsFromHistory", "UnsetHistoryID"]),
         Process() {
             if (this.ReadLink) {
-                axios.get("https://cors.bridged.cc/" + this.ReadLink)
+                axios.get("https://api.allorigins.win/raw?url=" + this.ReadLink)
                 .then((response) => {
                     // Handle success
                     this.TextData = sanitizeHtml(response.data, {
@@ -81,7 +81,7 @@ export default {
                     setTimeout(() => {
                         if (!this.IsRaw) {
                             // Match title tag with regex magic
-                            this.TextTitle = this.TextData.match(/<title>(.*?)<\/title>/i)[1];
+                            this.TextTitle = this.TextData?.match(/<title>(.*?)<\/title>/i)[1] || "Untitled Article";
                             if (!this.HistoryHasTitle) {
                                 this.UpdateHistoryEntry({id: this.LocalHistoryID, prop: "title", value: this.TextTitle});
                             }

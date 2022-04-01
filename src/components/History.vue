@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div
             v-for="entry, HistoryIndex of History.sort((a, b) => b.date - a.date)" :key="HistoryIndex"
-            class="flex flex-col m-2 text-xl bg-primary rounded-xl text-center"
+            class="flex flex-col m-2 text-lg bg-primary rounded-xl text-center"
         >
             <div>
                 <div class="flex flex-row w-full justify-between items-center window-bar px-2 rounded-t-xl">
