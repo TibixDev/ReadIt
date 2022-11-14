@@ -53,7 +53,11 @@ export default {
         ...mapMutations(["NewHistoryEntry", "UpdateHistoryEntry", "SetPropsFromHistory", "UnsetHistoryID"]),
         Process() {
             if (this.ReadLink) {
-                axios.get("https://api.allorigins.win/raw?url=" + this.ReadLink)
+                axios.get("https://corsproxy.io/?" + this.ReadLink, {
+                    headers: {
+                        origin: "X-Requested-With"
+                    }
+                })
                 .then((response) => {
                     // Handle success
                     this.TextData = sanitizeHtml(response.data, {

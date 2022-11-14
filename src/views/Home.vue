@@ -1,22 +1,23 @@
 <template>
     <h1 class="text-3xl py-10">Enter a URL to get started.</h1>
     <div class="flex flex-row justify-center px-3 pb-5">
-        <input :value="ReadLink" @input="UpdateReadLink" class="w-full sm:w-auto text-gray-500 text-xl p-4 rounded-l-md" placeholder="https://read.me/text.txt" type="text" name="textlink" id="textlink">
+        <input :value="ReadLink" @input="UpdateReadLink" class="w-full sm:w-auto text-gray-500 text-xl p-4 rounded-l-xl" placeholder="https://read.me/text.txt" type="text" name="textlink" id="textlink">
         <button
             :disabled="!IsValidLink"
-            class="rounded-r-md text-xl px-3"
+            class="rounded-r-xl text-xl px-3"
             :class="!IsValidLink ? 'bg-gray-600 cursor-not-allowed' : 'bg-primary'"
             @click="this.$router.push('/reader/')"
         >
         Read It
         </button>
     </div>
-    <div class="flex flex-col gap-5 justify-center text-left px-2 text-lg">
+    <div class="inline-flex flex-col gap-5 justify-center text-left text-lg p-5 rounded-md">
+        <h1 class="text-3xl font-bold pb-2 border-b-2 border-primary w-full text-center">Options</h1>
         <div>
             <input class="p-4 rounded-lg color-primary" type="checkbox" id="isRaw" :checked="IsRaw" @click="$store.commit('ChangeRaw')">
             <label for="isRaw" class="font-semibold px-2">Is raw text</label>
         </div>
-        <input @input="UpdateQuerySelector" v-if="!IsRaw" class="text-lg font-mono p-3 rounded-full w-full sm:w-1/4 color-primary" type="text" name="qs" id="qs" :value="QuerySelector" placeholder="Query Selector (Optional)">
+        <input @input="UpdateQuerySelector" v-if="!IsRaw" class="text-lg font-mono p-3 rounded-xl color-primary" type="text" name="qs" id="qs" :value="QuerySelector" placeholder="Query Selector (Optional)">
         <div v-if="!IsRaw">
             <input class="p-4 rounded-lg color-primary" type="checkbox" id="selectMultiple" :checked="SelectMultiple" @click="$store.commit('UpdateSelectMultiple')">
             <label for="selectMultiple" class="font-semibold px-2">Select all instances</label>

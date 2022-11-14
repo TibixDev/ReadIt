@@ -62,8 +62,8 @@ html {
 }
 
 .loading-bar {
-    @apply bg-pink-400;
-    @apply border-pink-400;
+    @apply bg-primary;
+    @apply border-primary;
 }
 
 </style>
